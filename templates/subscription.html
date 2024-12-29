@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Plans</title>
+    <!-- Linking CSS using Flask Jinja templating -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='subscription.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="navbar-brand">Video Analyzer</h1>
+            <ul class="navbar-menu">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                {% if not session.get('user') %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('signup') }}">Signup</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('subscription') }}" class="btn-subscribe">Subscription</a></li>
+            </ul>
+        </div>
+    </nav>
+    <header class="header">
+        <h1>Subscription Plans</h1>
+        <div class="toggle">
+            <button class="active">Monthly</button>
+            <button>Yearly</button>
+        </div>
+    </header>
+    <section class="subscription-plans">
+        <div class="plan">
+            <h2>Basic Plan</h2>
+            <p class="price">$5 <span>/month</span></p>
+            <p class="description">Ideal for individuals starting with video analysis.</p>
+            <ul>
+                <li>Upload up to 10 videos</li>
+                <li>Basic detection (profanity and nudity)</li>
+                <li>Email support</li>
+            </ul>
+            <div class="addons">
+                <p>Add-ons:</p>
+                <div>
+                    <label for="basic-addon">Extra videos:</label>
+                    <input type="number" id="basic-addon" value="10">
+                </div>
+            </div>
+            <button>Choose Basic Plan</button>
+        </div>
+        <div class="plan highlighted">
+            <h2>Standard Plan</h2>
+            <p class="price">$15 <span>/month</span></p>
+            <p class="description">Perfect for small teams with advanced detection needs.</p>
+            <ul>
+                <li>Upload up to 50 videos</li>
+                <li>Advanced detection (profanity, nudity, inappropriate clothing)</li>
+                <li>Priority support</li>
+            </ul>
+            <div class="addons">
+                <p>Add-ons:</p>
+                <div>
+                    <label for="standard-addon">Extra videos:</label>
+                    <input type="number" id="standard-addon" value="20">
+                </div>
+            </div>
+            <button>Choose Standard Plan</button>
+        </div>
+        <div class="plan">
+            <h2>Premium Plan</h2>
+            <p class="price">$25 <span>/month</span></p>
+            <p class="description">Best for large organizations and comprehensive detection.</p>
+            <ul>
+                <li>Unlimited video uploads</li>
+                <li>Full detection suite (profanity, nudity, kissing, etc.)</li>
+                <li>24/7 premium support</li>
+            </ul>
+            <div class="addons">
+                <p>Add-ons:</p>
+                <div>
+                    <label for="premium-addon">Extra videos:</label>
+                    <input type="number" id="premium-addon" value="50">
+                </div>
+            </div>
+            <button>Choose Premium Plan</button>
+        </div>
+    </section>
+    <footer class="footer">
+        <p>&copy; 2024 Video Analyzer. All rights reserved.</p>
+    </footer>
+</body>
+</html>

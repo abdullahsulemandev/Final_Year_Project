@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='feedback.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="navbar-brand">Video Analyzer</h1>
+            <ul class="navbar-menu">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                {% if not session.get('user') %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('signup') }}">Signup</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('subscription') }}" class="btn-subscribe">Subscription</a></li>
+                <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="feedback-container">
+        <h1>We Value Your Feedback</h1>
+        <form method="POST" action="/feedback">
+            <textarea name="feedback" placeholder="Write your feedback here..." rows="5" required></textarea>
+            <button type="submit" class="btn-submit">Submit Feedback</button>
+        </form>
+        <a href="/home" class="back-link">Back to Home</a>
+
+        <h2>All Feedback</h2>
+        <div class="feedback-list">
+            {% for feedback, timestamp, email in feedbacks %}
+                <div class="feedback-item">
+                    <p class="feedback-meta">
+                        <strong>{{ email }}</strong> 
+                        <span>({{ timestamp }})</span>
+                    </p>
+                    <p class="feedback-text">{{ feedback }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

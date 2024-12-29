@@ -1,0 +1,247 @@
+/* Global Styles */
+body {
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container for form */
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+/* Form container */
+.form-container {
+    background-color: #1c1c1c; /* Dark gray container */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+/* Headings */
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+/* Input group */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+}
+
+/* Buttons */
+.btn {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+/* Center text */
+.text-center {
+    margin-top: 20px;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Forgot Password Page */
+.forgot-password-container {
+    background-color: #1c1c1c; /* Dark gray container */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.forgot-password-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.forgot-password-container form {
+    margin-top: 20px;
+}
+
+/* Reset Password Page */
+.reset-password-container {
+    background-color: #1c1c1c; /* Dark gray container */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.reset-password-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.reset-password-container form {
+    margin-top: 20px;
+}
+
+/* Styling for error/success messages */
+.flash-message {
+    margin-top: 10px;
+    padding: 10px;
+    color: #fff;
+    background-color: #333;
+    border-radius: 5px;
+}
+.flash-message.success {
+    background-color: #4CAF50;
+}
+
+.flash-message.danger {
+    background-color: #f44336;
+}
+
+/* Feedback Page Styles */
+.feedback-container {
+    background-color: #1c1c1c; /* Dark gray container */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.feedback-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.feedback-container form {
+    margin-top: 20px;
+}
+
+.feedback-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    resize: vertical;
+    height: 100px;
+    margin-bottom: 15px;
+}
+
+.feedback-container .btn-submit {
+    background-color: #9147ff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.feedback-container .btn-submit:hover {
+    background-color: #772ce8;
+}
+
+/* Flash Messages */
+.feedback-container .flash-message {
+    margin-top: 10px;
+    padding: 10px;
+    color: #fff;
+    background-color: #333;
+    border-radius: 5px;
+}
+
+.feedback-container .flash-message.success {
+    background-color: #4CAF50;
+}
+
+.feedback-container .flash-message.error {
+    background-color: #f44336;
+}
+
+/* Progress Bar Styles */
+.btn-download {
+    display: inline-block;
+    outline: 0;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 4px;
+    font-size: 13px;
+    height: 33px;
+    background-color: #9147ff;
+    color: white;
+    padding: 0 10px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.btn-download:hover {
+    background-color: #772ce8;
+}
+
+.progress-bar {
+    width: 50%;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress-bar-inner {
+    height: 100%;
+    width: 0%;
+    background-color: #9147ff;
+    transition: width 0.3s ease;
+}
+
+.message {
+    text-align: center;
+    margin-top: 20px;
+}
