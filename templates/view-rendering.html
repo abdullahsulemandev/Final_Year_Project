@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Analyzer</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='base.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='index.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='assests/vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='assests/vendor/bootstrap-icons/bootstrap-icons.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='assests/vendor/aos/aos.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='assests/vendor/glightbox/css/glightbox.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='assests/vendor/swiper/swiper-bundle.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='assests/css/main.css') }}"
+    />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .feedback-section {
+        background-color: #f9f9f9;
+        padding: 20px;
+        text-align: center;
+        margin: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .feedback-section h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .feedback-section p {
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+
+      .feedback-section a {
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        background-color: #9147ff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      .feedback-section a:hover {
+        background-color: #772ce8;
+      }
+
+      /* Progress Bar Styles */
+      .btn-download {
+        display: inline-block;
+        outline: 0;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        border-radius: 4px;
+        font-size: 13px;
+        /* height: 33px; */
+        background-color: #772ce8;
+        color: white;
+        padding: 6px 10px;
+        text-align: center;
+        margin: 4px;
+        transition: background-color 0.3s;
+      }
+
+      .btn-download:hover {
+        color: white;
+        background-color: #9b57f0;
+      }
+
+      .progress-container {
+        display: none;
+      }
+
+      .progress-bar {
+        display: none;
+        width: 50%;
+        height: 20px;
+        background-color: #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 10px;
+      }
+
+      .progress-bar-inner {
+        height: 100%;
+        width: 0%;
+        background-color: #9147ff;
+        transition: width 0.3s ease;
+      }
+
+      .message {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      /* Filter Section Styles */
+      .filter-section {
+        background-color: #f9f9f9;
+        padding: 20px;
+        text-align: center;
+        margin: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .filter-section h3 {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .filter-section select,
+      .filter-section button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+      }
+
+      .filter-section button {
+        background-color: #9147ff;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .filter-section button:hover {
+        background-color: #772ce8;
+      }
+
+      .upload-container {
+        display: flex;
+        padding-top: 10px;
+        border-radius: 5px;
+        background: gray;
+        align-items: center;
+        justify-content: center;
+        background: gray;
+      }
+    </style>
+  </head>
+
+  <body class="index-page">
+    <!-- <nav class="navbar">
+      <div class="container">
+        <h1 class="navbar-brand">Video Analyzer</h1>
+        <ul class="navbar-menu">
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          {% if not session.get('user') %}
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('signup') }}">Signup</a></li>
+          {% else %}
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          {% endif %}
+          <li>
+            <a href="{{ url_for('subscription') }}" class="btn-subscribe"
+              >Subscription</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav> -->
+
+    <header id="header" class="header d-flex align-items-center fixed-top">
+      <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+  
+        <a href="{{ url_for('index') }}" class="logo d-flex align-items-center">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <img src="{{ url_for('static', filename='images/logo.png') }}" >
+          <h1 class="sitename">SilverScreen IQ</h1>
+        </a>
+  
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="{{ url_for('index') }}" class="active">Home</a></li>
+            {% if session.get('user') %}
+                <li><a href="{{ url_for('view_rendering') }}">Upload Video</a></li>
+            {% endif %}
+            <li><a href="#about">About</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="#">Dropdown 1</a></li>
+                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                  <ul>
+                    <li><a href="#">Deep Dropdown 1</a></li>
+                    <li><a href="#">Deep Dropdown 2</a></li>
+                    <li><a href="#">Deep Dropdown 3</a></li>
+                    <li><a href="#">Deep Dropdown 4</a></li>
+                    <li><a href="#">Deep Dropdown 5</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Dropdown 2</a></li>
+                <li><a href="#">Dropdown 3</a></li>
+                <li><a href="#">Dropdown 4</a></li>
+              </ul>
+            </li> -->
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            {% if not session.get('user') %}
+                  <li><a href="{{ url_for('login') }}">Login</a></li>
+                  <li><a href="{{ url_for('signup') }}">Signup</a></li>
+              {% else %}
+                  <li><a href="{{ url_for('logout') }}">Logout</a></li>
+              {% endif %}
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+      </div>
+  </header>
+
+    <main class="main">
+      <!-- Hero Section -->
+      <section class="dark-background mt-12">
+        <!-- Main Content -->
+        <div
+          class="upload-container d-flex align-items-center justify-content-center"
+          style="margin-top: 100px"
+        >
+          <form id="upload-form" enctype="multipart/form-data">
+            <input
+              type="file"
+              id="video-file"
+              name="video"
+              accept="video/mp4"
+            />
+            <label for="video-file" class="">📁 Select file</label>
+            <span id="file-label"></span>
+            <button type="submit" style="margin-left: 20px">
+              Upload Video
+            </button>
+          </form>
+        </div>
+
+        <div
+          class="progress-container d-flex align-items-center justify-content-center"
+        >
+          <div id="progress-bar" class="progress-bar">
+            <div id="progress-bar-inner" class="progress-bar-inner"></div>
+          </div>
+        </div>
+
+        <div
+          class="download-container d-flex align-items-center justify-content-center mt-4"
+          id="download-container"
+          style="display: none"
+        >
+          <a
+            id="download-link"
+            href="/download_video/{{ video_id }}"
+            class="btn-download"
+            >Download Detected Video</a
+          >
+        </div>
+
+        <div class="message" id="message">
+          <p>No videos have been uploaded yet.</p>
+        </div>
+
+        <!-- Subscription Section -->
+        <div class="card shadow p-4 mb-4 text-center filter-section">
+          <h2 class="text-warning">Unlock Premium Features!</h2>
+          <p class="mt-3">
+            Get access to advanced detection features and unlimited uploads.
+          </p>
+          <a
+            href="{{ url_for('subscription') }}"
+            class="btn btn-warning btn-lg mt-3"
+          >
+            Subscribe Now
+          </a>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="card shadow p-4 mb-4 filter-section">
+          <h3 class="text-primary">History of All Detected Filters</h3>
+          <ul id="filterContainer" class="list-group mt-3">
+            <!-- Filters will be dynamically added here -->
+          </ul>
+        </div>
+
+        <div class="card shadow p-4 mb-4 filter-section">
+          <h3 class="text-primary">Applied Detection Filter</h3>
+          <ul id="filter-container" class="list-group mt-3">
+            <!-- Filter results will be populated here -->
+          </ul>
+        </div>
+
+        <!-- Feedback Section -->
+        <div class="card shadow p-4 mb-4 feedback-section">
+          <h2 class="text-primary">We Value Your Feedback</h2>
+          <p class="text-secondary">
+            Help us improve by sharing your thoughts and suggestions.
+          </p>
+          <a href="{{ url_for('feedback') }}">Give Feedback</a>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer" class="footer dark-background">
+      <div class="container footer-top">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 footer-about">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="sitename">Bootslander</span>
+            </a>
+            <div class="footer-contact pt-3">
+              <p>A108 Adam Street</p>
+              <p>New York, NY 535022</p>
+              <p class="mt-3">
+                <strong>Phone:</strong> <span>+1 5589 55488 55</span>
+              </p>
+              <p><strong>Email:</strong> <span>info@example.com</span></p>
+            </div>
+            <div class="social-links d-flex mt-4">
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Terms of service</a></li>
+              <li><a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><a href="#">Web Design</a></li>
+              <li><a href="#">Web Development</a></li>
+              <li><a href="#">Product Management</a></li>
+              <li><a href="#">Marketing</a></li>
+              <li><a href="#">Graphic Design</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-12 footer-newsletter">
+            <h4>Our Newsletter</h4>
+            <p>
+              Subscribe to our newsletter and receive the latest news about our
+              products and services!
+            </p>
+            <form
+              action="forms/newsletter.php"
+              method="post"
+              class="php-email-form"
+            >
+              <div class="newsletter-form">
+                <input type="email" name="email" /><input
+                  type="submit"
+                  value="Subscribe"
+                />
+              </div>
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">
+                Your subscription request has been sent. Thank you!
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="container copyright text-center mt-4">
+        <p>
+          © <span>Copyright</span>
+          <strong class="px-1 sitename">Bootslander</strong>
+          <span>All Rights Reserved</span>
+        </p>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you've purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+          Designed by
+          <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed By
+          <a href="https://themewagon.com">ThemeWagon</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a
+      href="#"
+      id="scroll-top"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <script>
+      // Function to fetch and display filters
+      function fetchFilters() {
+        // Fetch filters from the server
+        fetch("/get_filters")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Filters fetched:", data); // Log the response for debugging
+
+            const filterContainer = document.getElementById("filterContainer");
+            filterContainer.innerHTML = ""; // Clear the list before populating it
+
+            if (data.filters && data.filters.length > 0) {
+              // Create table element
+              const table = document.createElement("table");
+              table.style.borderCollapse = "collapse";
+              table.style.width = "100%";
+
+              // Create table header
+              const thead = document.createElement("thead");
+              const headerRow = document.createElement("tr");
+
+              const headers = ["Filter", "Applied At", "User Email"];
+              headers.forEach((header) => {
+                const th = document.createElement("th");
+                th.textContent = header;
+                th.style.border = "1px solid #ddd";
+                th.style.padding = "8px";
+                th.style.backgroundColor = "#f2f2f2";
+                th.style.textAlign = "left";
+                headerRow.appendChild(th);
+              });
+              thead.appendChild(headerRow);
+              table.appendChild(thead);
+
+              // Create table body
+              const tbody = document.createElement("tbody");
+              data.filters.forEach((filter) => {
+                const row = document.createElement("tr");
+
+                const filterCell = document.createElement("td");
+                filterCell.textContent = filter.filter;
+                filterCell.style.border = "1px solid #ddd";
+                filterCell.style.padding = "8px";
+
+                const timestampCell = document.createElement("td");
+                timestampCell.textContent = filter.timestamp;
+                timestampCell.style.border = "1px solid #ddd";
+                timestampCell.style.padding = "8px";
+
+                const emailCell = document.createElement("td");
+                emailCell.textContent = filter.user_email;
+                emailCell.style.border = "1px solid #ddd";
+                emailCell.style.padding = "8px";
+
+                row.appendChild(filterCell);
+                row.appendChild(timestampCell);
+                row.appendChild(emailCell);
+                tbody.appendChild(row);
+              });
+              table.appendChild(tbody);
+
+              // Append the table to the container
+              filterContainer.innerHTML = ""; // Clear previous content
+              filterContainer.appendChild(table);
+            } else {
+              filterContainer.innerHTML = "<p>No filters applied yet.</p>";
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching filters:", error);
+            alert("An error occurred while fetching the filters.");
+          });
+
+        // Call the function to display filters when the page loads
+        document.addEventListener("DOMContentLoaded", fetchFilters);
+      }
+
+      // Call the function to display filters when the page loads
+      document.addEventListener("DOMContentLoaded", fetchFilters);
+
+      // Handle the video upload form submission
+      document
+        .getElementById("upload-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          var formData = new FormData();
+          var file = document.getElementById("video-file").files[0];
+
+          if (!file) {
+            alert("Please select a video file.");
+            return;
+          }
+
+          formData.append("video", file);
+
+          // Show the progress bar container immediately after file upload starts
+          document.querySelector(".progress-container").style.display = "block";
+          document.querySelector(".progress-bar").style.display = "block";
+          const progressBarInner =
+            document.getElementById("progress-bar-inner");
+          progressBarInner.style.width = "0%"; // Reset progress to 0
+
+          // Send the form data to the server
+          fetch("/home", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.message) {
+                alert(data.message);
+
+                // Start checking progress
+                const videoId = data.video_id;
+                checkProgress(videoId);
+              } else {
+                alert("Failed to upload video.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("An error occurred during upload.");
+            });
+        });
+
+      // Function to check progress
+      function checkProgress(videoId) {
+        const progressBarInner = document.getElementById("progress-bar-inner");
+        const message = document.getElementById("message");
+        const downloadContainer = document.getElementById("download-container");
+        const downloadLink = document.getElementById("download-link");
+        const filterContainer = document.getElementById("filterContainer"); // Where filters will be displayed
+
+        const interval = setInterval(() => {
+          fetch(`/progress/${videoId}`)
+            .then((response) => response.json())
+            .then((data) => {
+              const progress = data.progress;
+              progressBarInner.style.width = `${progress}%`; // Update progress bar width
+
+              if (progress >= 100) {
+                clearInterval(interval);
+                message.innerHTML =
+                  "<p>Video processing complete. You can now download the detected video.</p>";
+                downloadContainer.style.display = "flex"; // Show the download button
+                downloadLink.href = `/download_video/${videoId}`;
+
+                // Now, fetch the applied filter for this video
+                // Assuming `videoId` is already defined and pointing to the video you want to fetch filters for
+                fetch(`/get_applied_filter/${videoId}`)
+                  .then((response) => response.json())
+                  .then((data) => {
+                    const filterContainer =
+                      document.getElementById("filter-container"); // Make sure this element exists in your HTML
+
+                    // Check if filters are returned and display them
+                    if (data.filters && data.filters.length > 0) {
+                      // Generate table rows from filters
+                      const tableRows = data.filters
+                        .map(
+                          (filter) => `
+      <tr>
+        <td>${filter.filter}</td>
+        <td>${filter.timestamp}</td>
+      </tr>
+    `
+                        )
+                        .join("");
+
+                      // Create the table with headers and dynamically generated rows
+                      const tableHTML = `
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr style="background-color: #f2f2f2;">
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Filter</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Applied At</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${tableRows}
+      </tbody>
+    </table>
+  `;
+
+                      // Update the container with the table
+                      filterContainer.innerHTML = tableHTML;
+                    } else {
+                      filterContainer.innerHTML =
+                        "<p>No filters applied yet.</p>";
+                    }
+                  })
+                  .catch((error) => {
+                    console.error("Error fetching applied filter:", error);
+                    filterContainer.innerHTML =
+                      "<li>Error fetching applied filter.</li>";
+                  });
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching progress:", error);
+              clearInterval(interval);
+              message.innerHTML =
+                "<p>An error occurred while processing the video.</p>";
+            });
+        }, 1000); // Check progress every 1 second
+      }
+      // Handle filter form submission
+      document
+        .getElementById("filter-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          var selectedFilter = document.getElementById("filter-select").value;
+          // Send the filter to the server (you can add an endpoint to handle this)
+          alert("Selected filter: " + selectedFilter);
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='assests/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assests/vendor/php-email-form/validate.js') }}"></script>
+    <script src="{{ url_for('static', filename='assests/vendor/aos/aos.js') }}"></script>
+    <script src="{{ url_for('static', filename='assests/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assests/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+    <script src="{{ url_for('static', filename='assests/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assests/js/main.js') }}"></script>
+  </body>
+</html>

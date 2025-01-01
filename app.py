@@ -210,6 +210,41 @@ def subscription():
 
     return render_template('subscription.html')
 
+
+# Add a new route for the View Rendering page
+@app.route('/view-rendering', methods=['GET'])
+def view_rendering():
+    # Check if the user is logged in
+    if 'user' not in session:
+        flash('You need to log in to view the subscription page.', 'warning')
+        return redirect(url_for('view_rendering'))
+
+    # Render the view-rendering page
+    return render_template('view-rendering.html')
+
+# Add a new route for the View Rendering page
+@app.route('/license-agreement', methods=['GET'])
+def license_agreement():
+    # Check if the user is logged in
+    # Render the view-rendering page
+    return render_template('license-agreement.html')
+
+# Add a new route for the pricing 
+@app.route('/pricing', methods=['GET'])
+def pricing():
+    # Check if the user is logged in
+    # Render the view-rendering page
+    return render_template('pricing.html')
+
+
+
+# Add a new route for the View Rendering page
+@app.route('/contact', methods=['GET'])
+def contact():
+    # Check if the user is logged in
+    # Render the view-rendering page
+    return render_template('contact.html')
+
 # Forgot Password Route
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
@@ -345,7 +380,7 @@ def get_applied_filter(video_id):
             print(f"Filters for video_id {video_id}: {result}")  # Debugging line
 
             if result:
-                filters = [{"filter": row[0], "timestamp": row[1]} for row in result]
+                filters = [{"filter": row[0], "timestamp": row[1], "user_email": row[2]} for row in result]
                 return jsonify({"filters": filters})
             else:
                 return jsonify({"message": "No filters applied for this video."})
